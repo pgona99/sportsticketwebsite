@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sportsticket
+  labels:
+    app: sportsticket
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sportsticket
+  template:
+    metadata:
+      labels:
+        app: sportsticket
+    spec:
+      containers:
+        - name: sportsticket
+          image: sportsticket:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sportsticket-service
+spec:
+  selector:
+    app: sportsticket
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer

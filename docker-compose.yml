@@ -1,0 +1,10 @@
+services:
+  sportsticket:
+    build:
+      context: .
+    container_name: sportsticket-web
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
